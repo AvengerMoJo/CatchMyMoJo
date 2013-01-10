@@ -1,6 +1,7 @@
 package com.avengergear;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -22,6 +23,11 @@ public class CatchMyMoJoPreview extends SurfaceView implements SurfaceHolder.Cal
 	}
 
 	public void surfaceCreated(SurfaceHolder holder){
+		if (this.getResources().getConfiguration().orientation !=Configuration.ORIENTATION_LANDSCAPE){
+			mCamera.setDisplayOrientation(90);
+		} else {
+			mCamera.setDisplayOrientation(0);
+		}
 		try{
 			mCamera.setPreviewDisplay(holder);
 			mCamera.startPreview();
