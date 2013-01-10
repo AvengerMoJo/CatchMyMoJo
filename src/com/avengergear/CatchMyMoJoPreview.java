@@ -8,49 +8,47 @@ import android.widget.FrameLayout;
 
 import java.io.IOException;
 
-public class CatchMyMoJoPreview extends SurfaceView implements SurfaceHolder.Callback { 
-    private SurfaceHolder mSurfaceHolder; 
-    private Camera mCamera;
+public class CatchMyMoJoPreview extends SurfaceView implements SurfaceHolder.Callback {
+	private SurfaceHolder mSurfaceHolder;
+	private Camera mCamera;
 
-    public CatchMyMoJoPreview(Context context, Camera cam){
-        super(context);
-	mCamera = cam;
+	public CatchMyMoJoPreview(Context context, Camera cam){
+		super(context);
+		mCamera = cam;
 
-        mSurfaceHolder = getHolder();
-	mSurfaceHolder.addCallback(this);
-	//mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-	//
-    }
-
-    public void surfaceCreated(SurfaceHolder holder){
-        try{
-            mCamera.setPreviewDisplay(holder);
-	    mCamera.startPreview();
-	} catch (IOException e){
-		// shit can't preview! 
-	}
-    }
-
-    public void surfaceDestroyed(SurfaceHolder holder){
-        // don't care for now 
-    }
-
-    public void surfaceChanged(SurfaceHolder holder, int format, int w, int h){
-        if(mSurfaceHolder.getSurface() == null){
-            // hack it is not here.. why? 
-	    return; 
-	}
-	try{
-            mCamera.stopPreview();
-	} catch (Exception e){
-            // don't care
+		mSurfaceHolder = getHolder();
+		mSurfaceHolder.addCallback(this);
+		//mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 	}
 
-	try{
-            mCamera.setPreviewDisplay(mSurfaceHolder);
-	    mCamera.startPreview();
-	} catch (Exception e){
-            // shit..... preview just won't start
+	public void surfaceCreated(SurfaceHolder holder){
+		try{
+			mCamera.setPreviewDisplay(holder);
+			mCamera.startPreview();
+		} catch (IOException e){
+			// shit can't preview!
+		}
 	}
-    }
+
+	public void surfaceDestroyed(SurfaceHolder holder){
+		// don't care for now 
+	}
+
+	public void surfaceChanged(SurfaceHolder holder, int format, int w, int h){
+		if(mSurfaceHolder.getSurface() == null){
+			// hack it is not here.. why?
+			return;
+		}
+		try{
+			mCamera.stopPreview();
+		} catch (Exception e){
+			// don't care
+		}
+		try{
+			mCamera.setPreviewDisplay(mSurfaceHolder);
+			mCamera.startPreview();
+		} catch (Exception e){
+			// shit..... preview just won't start
+		}
+	}
 }
